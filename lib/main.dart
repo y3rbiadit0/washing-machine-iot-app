@@ -1,19 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:go_router/go_router.dart';
 
 import 'language/language.dart';
 import 'language/language_pop_up_menu.dart';
-
-part 'main.g.dart';
-
-// We create a "provider", which will store a value (here "Hello world").
-// By using a provider, this allows us to mock/override the value exposed.
-@riverpod
-String helloWorld(HelloWorldRef ref) {
-  return 'Hello world two';
-}
+import 'routes/router.dart';
+import 'routes/routes.dart';
 
 void main() {
   //WidgetsFlutterBinding.ensureInitialized();
@@ -22,34 +15,61 @@ void main() {
     // application in a "ProviderScope" widget.
     // This is where the state of our providers will be stored.
     const ProviderScope(
-      child: HomePage(),
+      child: WashingMachineApp(),
     ),
   );
 }
 
-// Extend ConsumerWidget instead of StatelessWidget, which is exposed by Riverpod
+class WashingMachineApp extends ConsumerWidget {
+  const WashingMachineApp({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final router = ref.watch(routerProvider);
+    final language = ref.watch(languageStateProvider);
+    return MaterialApp.router(
+      routeInformationParser: router.routeInformationParser,
+      routerDelegate: router.routerDelegate,
+      routeInformationProvider: router.routeInformationProvider,
+      title: "Washing Machine IoT",
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      locale: Locale(language.code),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    //final String value = ref.watch(helloWorldProvider);
-    final language = ref.watch(languageStateProvider);
-
-    return MaterialApp(
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      locale: Locale(language.code),
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("Title"),
-          actions: const [LanguagePopUpMenu()],
-        ),
-        body: Center(
-          child: Text("Hello World"),
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(""),
+        actions: const [LanguagePopUpMenu(), SizedBox(width: 8.0)],
       ),
+      body: const Center(
+        child: Text("Hello World"),
+      ),
+    );
+  }
+}
+
+class SplashPage extends StatelessWidget {
+  const SplashPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(child: FloatingActionButton(
+        onPressed: () => context.go(AppRoutes.homepage.path),
+        child: const Text("Press me"),
+      )),
     );
   }
 }
