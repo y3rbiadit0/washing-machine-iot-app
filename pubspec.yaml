@@ -42,6 +42,7 @@ dependencies:
   intl: any
   go_router: ^12.1.1
   firebase_auth: ^4.14.0
+  google_sign_in: ^6.1.6
 
 
 

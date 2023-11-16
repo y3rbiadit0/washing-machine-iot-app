@@ -1,6 +1,6 @@
 enum AppRoutes {
   homepage(name: "homepage", path: "/"),
-  splash_screen(name: "splash_screen", path: "/splash");
+  login_page(name: "login_page", path: "/login");
 
   const AppRoutes({
     required this.name,
