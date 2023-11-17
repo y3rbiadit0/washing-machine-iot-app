@@ -6,19 +6,6 @@ class Authentication {
   // For Authentication related functions you need an instance of FirebaseAuth
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  // Now This Class Contains 3 Functions currently
-  // 1. signInWithGoogle
-  // 2. signOut
-  // 3. signInwithEmailAndPassword
-
-  //  All these functions are async because this involves a future.
-  //  if async keyword is not used, it will throw an error.
-  //  to know more about futures, check out the documentation.
-  //  https://dart.dev/codelabs/async-await
-  //  Read this to know more about futures.
-  //  Trust me it will really clear all your concepts about futures
-
-  //  SigIn the user using Email and Password
   Future<void> signInWithEmailAndPassword(
       String email, String password, BuildContext context) async {
     try {
@@ -41,7 +28,6 @@ class Authentication {
     }
   }
 
-  // SignUp the user using Email and Password
   Future<void> signUpWithEmailAndPassword(
       String email, String password, BuildContext context) async {
     try {
@@ -53,15 +39,15 @@ class Authentication {
       await showDialog(
           context: context,
           builder: (ctx) => AlertDialog(
-              title: Text('Error Occured'),
-              content: Text(e.toString()),
-              actions: [
-                TextButton(
-                    onPressed: () {
-                      Navigator.of(ctx).pop();
-                    },
-                    child: Text("OK"))
-              ]));
+                  title: Text('Error Occured'),
+                  content: Text(e.toString()),
+                  actions: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.of(ctx).pop();
+                        },
+                        child: Text("OK"))
+                  ]));
     } catch (e) {
       if (e == 'email-already-in-use') {
         print('Email already in use.');
@@ -78,7 +64,7 @@ class Authentication {
 
     // Obtain the auth details from the request
     final GoogleSignInAuthentication googleAuth =
-    await googleUser!.authentication;
+        await googleUser!.authentication;
 
     // Create a new credential
     final credential = GoogleAuthProvider.credential(

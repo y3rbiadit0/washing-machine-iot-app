@@ -39,7 +39,8 @@ final routerProvider = Provider<GoRouter>((ref) {
   );
 });
 
-String? handleAuthStateChanges(AsyncValue<User?> authState, GoRouterState state) {
+String? handleAuthStateChanges(
+    AsyncValue<User?> authState, GoRouterState state) {
   if (authState.isLoading || authState.hasError) return null;
 
   // Here we guarantee that hasData == true, i.e. we have a readable value

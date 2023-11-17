@@ -1,15 +1,20 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'auth/auth.dart';
+import 'firebase_options.dart';
 import 'language/language.dart';
 import 'language/language_pop_up_menu.dart';
 import 'routes/router.dart';
 import 'routes/routes.dart';
 
-void main() {
-  //WidgetsFlutterBinding.ensureInitialized();
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
     // For widgets to be able to read providers, we need to wrap the entire
     // application in a "ProviderScope" widget.
@@ -66,8 +71,12 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: FloatingActionButton(
-        onPressed: () => context.go(AppRoutes.homepage.path),
+      body: Center(
+          child: FloatingActionButton(
+        onPressed: () async {
+          await Authentication().signInWithGoogle(context);
+          context.go(AppRoutes.homepage.path);
+        },
         child: const Text("Press me"),
       )),
     );

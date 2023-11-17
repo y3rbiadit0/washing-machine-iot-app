@@ -9,5 +9,4 @@ enum AppRoutes {
 
   final String name;
   final String path;
-
 }
