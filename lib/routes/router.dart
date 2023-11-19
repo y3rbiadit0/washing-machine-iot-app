@@ -42,17 +42,17 @@ final routerProvider = Provider<GoRouter>((ref) {
 
 String? handleAuthStateChanges(
     AsyncValue<User?> authState, GoRouterState state) {
-  if (authState.isLoading || authState.hasError) return null;
-
-  // Here we guarantee that hasData == true, i.e. we have a readable value
-
-  // This has to do with how the FirebaseAuth SDK handles the "log-in" state
-  // Returning `null` means "we are not authorized"
-  final isAuth = authState.valueOrNull != null;
-
-  final isLoginPage = state.path == AppRoutes.login_page.path;
-  if (isLoginPage) {
-    return isAuth ? AppRoutes.homepage.path : AppRoutes.login_page.path;
-  }
-  return isAuth ? null : AppRoutes.login_page.path;
+  // if (authState.isLoading || authState.hasError) return null;
+  //
+  // // Here we guarantee that hasData == true, i.e. we have a readable value
+  //
+  // // This has to do with how the FirebaseAuth SDK handles the "log-in" state
+  // // Returning `null` means "we are not authorized"
+  // final isAuth = authState.valueOrNull != null;
+  //
+  // final isLoginPage = state.path == AppRoutes.login_page.path;
+  // if (isLoginPage) {
+  //   return isAuth ? AppRoutes.homepage.path : AppRoutes.login_page.path;
+  // }
+  // return isAuth ? null : AppRoutes.login_page.path;
 }
