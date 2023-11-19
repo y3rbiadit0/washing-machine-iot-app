@@ -1,4 +1,8 @@
 {
   "helloWorld": "Hola Mundo!",
-  "language": "Lenguaje"
+  "language": "Lenguaje",
+  "home_page_title": "Washing Machines IoT",
+  "home_page_reserve_button": "Hacé tu reserva!",
+  "home_page_washing_machines_label": "Lavarropas",
+  "home_page_dryer_machines_label": "Secadoras"
 }

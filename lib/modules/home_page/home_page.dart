@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:washing_machine_iot_app/modules/home_page/washing_machine_widget.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../language/language_pop_up_menu.dart';
 
 class HomePage extends ConsumerWidget {
@@ -11,7 +11,7 @@ class HomePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Washing Machines IoT"),
+        title: Text(AppLocalizations.of(context)?.home_page_title ?? ""),
         actions: const [LanguagePopUpMenu(), SizedBox(width: 8.0)],
       ),
       body: const Column(
@@ -26,7 +26,8 @@ class HomePage extends ConsumerWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {},
-        label: const Text("Reserve Machine!"),
+        label:
+            Text(AppLocalizations.of(context)?.home_page_reserve_button ?? ""),
       ),
     );
   }
@@ -46,24 +47,26 @@ class WashingMachinesSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Card(
-      margin: EdgeInsets.all(8.0),
+    return Card(
+      margin: const EdgeInsets.all(8.0),
       elevation: 2,
       child: Column(
         children: [
           //Add a title to the row
           Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: Align(
               alignment: Alignment.center,
               child: Text(
-                "Washing Machines",
-                style: TextStyle(fontSize: 18.0),
+                AppLocalizations.of(context)
+                        ?.home_page_washing_machines_label ??
+                    "",
+                style: const TextStyle(fontSize: 18.0),
               ),
             ),
           ),
-          SizedBox(height: 8.0),
-          Row(
+          const SizedBox(height: 8.0),
+          const Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Expanded(
@@ -106,24 +109,25 @@ class DryerMachinesSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Card(
-      margin: EdgeInsets.all(8.0),
+    return Card(
+      margin: const EdgeInsets.all(8.0),
       elevation: 2,
       child: Column(
         children: [
           //Add a title to the row
           Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: Align(
               alignment: Alignment.center,
               child: Text(
-                "Dryer Machines",
-                style: TextStyle(fontSize: 18.0),
+                AppLocalizations.of(context)?.home_page_dryer_machines_label ??
+                    "",
+                style: const TextStyle(fontSize: 18.0),
               ),
             ),
           ),
-          SizedBox(height: 8.0),
-          Row(
+          const SizedBox(height: 8.0),
+          const Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Expanded(

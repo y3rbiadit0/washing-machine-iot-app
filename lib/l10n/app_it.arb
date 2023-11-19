@@ -1,4 +1,8 @@
 {
   "helloWorld": "Salve Mondo!",
-  "language": "Lingua"
+  "language": "Lingua",
+  "home_page_title": "Washing Machines IoT",
+  "home_page_reserve_button": "Prenota la lavatrice!",
+  "home_page_washing_machines_label": "Lavatrici",
+  "home_page_dryer_machines_label": "Asciugatrici"
 }
