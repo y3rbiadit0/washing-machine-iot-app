@@ -18,7 +18,7 @@ class HomePage extends ConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           WashingMachinesSection(),
-          WashingMachinesSection(),
+          DryerMachinesSection(),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -43,6 +43,24 @@ class WashingMachinesSection extends StatelessWidget {
         Expanded(flex: 1, child: AvailableWashingMachine(number: 1)),
         Expanded(flex: 1, child: OccupiedWashingMachine(number: 2)),
         Expanded(flex: 1, child: OutOfServiceWashingMachine(number: 3)),
+      ],
+    );
+  }
+}
+
+class DryerMachinesSection extends StatelessWidget {
+  const DryerMachinesSection({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return const Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Expanded(flex: 1, child: AvailableDryerMachine(number: 1)),
+        Expanded(flex: 1, child: OccupiedDryerMachine(number: 2)),
+        Expanded(flex: 1, child: OutOfServiceDryerMachine(number: 3)),
       ],
     );
   }
