@@ -16,7 +16,7 @@ final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     navigatorKey: _key,
     debugLogDiagnostics: true,
-    initialLocation: AppRoutes.login_page.path,
+    initialLocation: AppRoutes.homepage.path,
     routes: [
       GoRoute(
         path: AppRoutes.login_page.path,
