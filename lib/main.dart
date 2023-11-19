@@ -10,6 +10,7 @@ import 'language/language.dart';
 import 'language/language_pop_up_menu.dart';
 import 'routes/router.dart';
 import 'routes/routes.dart';
+import 'theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,9 +38,7 @@ class WashingMachineApp extends ConsumerWidget {
       routerDelegate: router.routerDelegate,
       routeInformationProvider: router.routeInformationProvider,
       title: "Washing Machine IoT",
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: WashingMachineAppTheme.light,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       locale: Locale(language.code),
@@ -61,24 +60,6 @@ class HomePage extends ConsumerWidget {
       body: const Center(
         child: Text("Hello World"),
       ),
-    );
-  }
-}
-
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-          child: FloatingActionButton(
-        onPressed: () async {
-          await Authentication().signInWithGoogle(context);
-          context.go(AppRoutes.homepage.path);
-        },
-        child: const Text("Press me"),
-      )),
     );
   }
 }

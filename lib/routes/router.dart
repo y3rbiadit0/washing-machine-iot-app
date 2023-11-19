@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../auth/auth_provider.dart';
 import '../main.dart';
+import '../modules/login_page/login_page.dart';
 import '../routes/routes.dart';
 
 final _key = GlobalKey<NavigatorState>();
