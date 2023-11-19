@@ -46,20 +46,3 @@ class WashingMachineApp extends ConsumerWidget {
     );
   }
 }
-
-class HomePage extends ConsumerWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(""),
-        actions: const [LanguagePopUpMenu(), SizedBox(width: 8.0)],
-      ),
-      body: const Center(
-        child: Text("Hello World"),
-      ),
-    );
-  }
-}
