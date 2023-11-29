@@ -26,8 +26,10 @@ class HomePage extends ConsumerWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {},
-        label:
-            Text(AppLocalizations.of(context)?.home_page_reserve_button ?? ""),
+        label: Text(
+          AppLocalizations.of(context)?.home_page_reserve_button ?? "",
+          style: const TextStyle(color: Colors.black),
+        ),
       ),
     );
   }
