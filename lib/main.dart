@@ -2,14 +2,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
-import 'auth/auth.dart';
 import 'firebase_options.dart';
 import 'language/language.dart';
-import 'language/language_pop_up_menu.dart';
 import 'routes/router.dart';
-import 'routes/routes.dart';
 import 'theme.dart';
 
 Future<void> main() async {
