@@ -45,6 +45,8 @@ dependencies:
   google_sign_in: ^6.1.6
   firebase_core: ^2.22.0
   google_fonts: ^6.1.0
+  dio: ^5.4.0
+  logger: ^2.0.2+1
 
 
 

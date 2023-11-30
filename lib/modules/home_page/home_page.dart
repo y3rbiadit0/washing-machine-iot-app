@@ -1,28 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:washing_machine_iot_app/modules/home_page/washing_machine_widget.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import '../../language/language_pop_up_menu.dart';
+import '../../providers/washing_machine_api/washing_machine_provider.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final washingMachinesData = ref.watch(allWashingMachinesProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)?.home_page_title ?? ""),
         actions: const [LanguagePopUpMenu(), SizedBox(width: 8.0)],
       ),
-      body: const Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          SizedBox(height: 8.0),
-          WashingMachinesSection(available: 1, occupied: 2, outOfService: 3),
-          SizedBox(height: 8.0),
-          DryerMachinesSection(available: 1, occupied: 2, outOfService: 3),
-        ],
-      ),
+      body: washingMachinesData.when(
+          data: (data) {
+            int available = data.map((e) => e.status == "free").length;
+            int occupied = data.map((e) => e.status == "occupied").length;
+            int outOfService =
+                data.map((e) => e.status == "out_of_service").length;
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const SizedBox(height: 8.0),
+                WashingMachinesSection(
+                    available: available,
+                    occupied: occupied,
+                    outOfService: outOfService),
+                const SizedBox(height: 8.0),
+                const DryerMachinesSection(
+                    available: 1, occupied: 2, outOfService: 3),
+              ],
+            );
+          },
+          error: (error, stack) => Center(child: Text('Error: $error')),
+          loading: () => const Center(child: CircularProgressIndicator())),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {},
@@ -68,26 +84,26 @@ class WashingMachinesSection extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8.0),
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Expanded(
                   flex: 1,
                   child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: AvailableWashingMachine(number: 1),
+                    padding: const EdgeInsets.all(8.0),
+                    child: AvailableWashingMachine(number: available),
                   )),
               Expanded(
                   flex: 1,
                   child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: OccupiedWashingMachine(number: 2),
+                    padding: const EdgeInsets.all(8.0),
+                    child: OccupiedWashingMachine(number: occupied),
                   )),
               Expanded(
                   flex: 1,
                   child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: OutOfServiceWashingMachine(number: 3),
+                    padding: const EdgeInsets.all(8.0),
+                    child: OutOfServiceWashingMachine(number: outOfService),
                   )),
             ],
           ),
