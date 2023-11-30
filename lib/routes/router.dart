@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../auth/auth_provider.dart';
-import '../modules/login_page/login_page.dart';
 import '../modules/home_page/home_page.dart';
+import '../modules/login_page/login_page.dart';
 import '../routes/routes.dart';
 
 final _key = GlobalKey<NavigatorState>();
