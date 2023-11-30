@@ -19,10 +19,10 @@ class HomePage extends ConsumerWidget {
       ),
       body: washingMachinesData.when(
           data: (data) {
-            int available = data.map((e) => e.status == "free").length;
-            int occupied = data.map((e) => e.status == "occupied").length;
+            int available = data.where((e) => e.status == "free").length;
+            int occupied = data.where((e) => e.status == "occupied").length;
             int outOfService =
-                data.map((e) => e.status == "out_of_service").length;
+                data.where((e) => e.status == "out_of_service").length;
             return Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [

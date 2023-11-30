@@ -15,8 +15,10 @@ enum WashingMachineStatusColor {
 abstract class _MachineStatus extends StatelessWidget {
   final int number;
   final WashingMachineStatusColor color;
+  final String label;
 
-  const _MachineStatus({required this.number, required this.color});
+  const _MachineStatus(
+      {required this.number, required this.color, required this.label});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,8 @@ abstract class _MachineStatus extends StatelessWidget {
 class _WashingMachineStatus extends _MachineStatus {
   final double size = 50.0;
 
-  const _WashingMachineStatus({required super.number, required super.color});
+  const _WashingMachineStatus(
+      {required super.number, required super.color, required super.label});
 
   @override
   Widget build(BuildContext context) {
@@ -43,30 +46,45 @@ class _WashingMachineStatus extends _MachineStatus {
       ),
       width: size,
       height: size,
-      child: Center(child: Text(number.toString())),
+      child: Column(
+        children: [
+          Center(child: Text(number.toString())),
+          Center(child: Text(label)),
+        ],
+      ),
     );
   }
 }
 
 class AvailableWashingMachine extends _WashingMachineStatus {
   const AvailableWashingMachine({required number})
-      : super(number: number, color: WashingMachineStatusColor.available);
+      : super(
+            number: number,
+            color: WashingMachineStatusColor.available,
+            label: "Available");
 }
 
 class OccupiedWashingMachine extends _WashingMachineStatus {
   const OccupiedWashingMachine({required number})
-      : super(number: number, color: WashingMachineStatusColor.occupied);
+      : super(
+            number: number,
+            color: WashingMachineStatusColor.occupied,
+            label: "Occupied");
 }
 
 class OutOfServiceWashingMachine extends _WashingMachineStatus {
   const OutOfServiceWashingMachine({required number})
-      : super(number: number, color: WashingMachineStatusColor.outOfService);
+      : super(
+            number: number,
+            color: WashingMachineStatusColor.outOfService,
+            label: "Out of Service");
 }
 
 class _DryerMachineStatus extends _MachineStatus {
-  final double size = 50.0;
+  final double size = 100.0;
 
-  const _DryerMachineStatus({required super.number, required super.color});
+  const _DryerMachineStatus(
+      {required super.number, required super.color, required super.label});
 
   @override
   Widget build(BuildContext context) {
@@ -78,10 +96,15 @@ class _DryerMachineStatus extends _MachineStatus {
         color: color.value, // Adjust the color of the circle as needed
       ),
       child: ClipOval(
-        child: Center(
-          child: Text(
-            number.toString(),
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(number.toString()),
+            Text(
+              label,
+              maxLines: 2,
+            ),
+          ],
         ),
       ),
     );
@@ -90,15 +113,24 @@ class _DryerMachineStatus extends _MachineStatus {
 
 class AvailableDryerMachine extends _DryerMachineStatus {
   const AvailableDryerMachine({required number})
-      : super(number: number, color: WashingMachineStatusColor.available);
+      : super(
+            number: number,
+            color: WashingMachineStatusColor.available,
+            label: "Available");
 }
 
 class OccupiedDryerMachine extends _DryerMachineStatus {
   const OccupiedDryerMachine({required number})
-      : super(number: number, color: WashingMachineStatusColor.occupied);
+      : super(
+            number: number,
+            color: WashingMachineStatusColor.occupied,
+            label: "Occupied");
 }
 
 class OutOfServiceDryerMachine extends _DryerMachineStatus {
   const OutOfServiceDryerMachine({required number})
-      : super(number: number, color: WashingMachineStatusColor.outOfService);
+      : super(
+            number: number,
+            color: WashingMachineStatusColor.outOfService,
+            label: "Out of Service");
 }
