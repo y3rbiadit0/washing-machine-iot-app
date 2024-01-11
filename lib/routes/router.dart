@@ -29,7 +29,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: AppRoutes.homepage.path,
         name: AppRoutes.homepage.name,
         builder: (context, state) {
-          return const HomePage();
+          return HomePage();
         },
       ),
     ],
