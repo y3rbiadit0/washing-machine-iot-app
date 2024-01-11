@@ -5,13 +5,15 @@ import 'package:washing_machine_iot_app/modules/home_page/washing_machine_widget
 
 import '../../language/language_pop_up_menu.dart';
 import '../../providers/washing_machine_api/washing_machine_provider.dart';
+import '../error_widgets/no_connection_error.dart';
 
 class HomePage extends ConsumerWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final washingMachinesData = ref.watch(allWashingMachinesProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)?.home_page_title ?? ""),
@@ -37,7 +39,11 @@ class HomePage extends ConsumerWidget {
               ],
             );
           },
-          error: (error, stack) => Center(child: Text('Error: $error')),
+          error: (error, stack) => Center(child: NoConnection(
+                onRetry: () {
+                  ref.refresh(allWashingMachinesProvider.future);
+                },
+              )),
           loading: () => const Center(child: CircularProgressIndicator())),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(
