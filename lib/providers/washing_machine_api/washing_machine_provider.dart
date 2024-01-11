@@ -16,9 +16,14 @@ class WashingMachinesAPI extends WashingMachineHttpClient {
   WashingMachinesAPI() : super();
 
   Future<List<WashingMachineModel>> getWashingMachines() async {
-    final response = await dioClient.get("/washing-machines/all");
+    final response = await dioClient.get("washing-machines/all");
     return (response.data as List)
         .map((json) => WashingMachineModel.fromJson(json))
         .toList();
+  }
+
+  Future<Map<String, dynamic>> getHealthStatus() async {
+    final response = await dioClient.get("health");
+    return response.data as Map<String, dynamic>;
   }
 }

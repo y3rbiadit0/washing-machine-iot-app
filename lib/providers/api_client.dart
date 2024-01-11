@@ -5,11 +5,11 @@ import '../logger.dart';
 class WashingMachineHttpClient {
   final options = BaseOptions(
     baseUrl: "http://127.0.0.1:8000/v1/",
-    connectTimeout: const Duration(seconds: 60),
-    receiveTimeout: const Duration(seconds: 60),
+    connectTimeout: const Duration(seconds: 10),
+    receiveTimeout: const Duration(seconds: 10),
   );
 
-  get dioClient {
+  Dio get dioClient {
     Dio dio = Dio(options);
     dio.interceptors.add(ApiInterceptors());
     return dio;
