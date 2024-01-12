@@ -1,12 +1,24 @@
-enum AppRoutes {
-  homepage(name: "homepage", path: "/"),
-  login_page(name: "login_page", path: "/login");
-
-  const AppRoutes({
+class RouteData {
+  const RouteData({
     required this.name,
     required this.path,
   });
 
   final String name;
   final String path;
+}
+
+enum AppRoutes { homepage, login_page, reservation_page }
+
+extension AppRoutesExtension on AppRoutes {
+  RouteData get details {
+    switch (this) {
+      case AppRoutes.homepage:
+        return const RouteData(name: "homepage", path: "/");
+      case AppRoutes.login_page:
+        return const RouteData(name: "login_page", path: "/login");
+      case AppRoutes.reservation_page:
+        return const RouteData(name: "reservation_page", path: "/reservation");
+    }
+  }
 }

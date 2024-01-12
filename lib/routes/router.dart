@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../auth/auth_provider.dart';
 import '../modules/home_page/home_page.dart';
+import '../modules/home_page/reservation.dart';
 import '../modules/login_page/login_page.dart';
 import '../routes/routes.dart';
 
@@ -16,20 +17,27 @@ final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     navigatorKey: _key,
     debugLogDiagnostics: true,
-    initialLocation: AppRoutes.homepage.path,
+    initialLocation: AppRoutes.homepage.details.path,
     routes: [
       GoRoute(
-        path: AppRoutes.login_page.path,
-        name: AppRoutes.login_page.name,
+        path: AppRoutes.login_page.details.path,
+        name: AppRoutes.login_page.details.name,
         builder: (context, state) {
           return const LoginPage();
         },
       ),
       GoRoute(
-        path: AppRoutes.homepage.path,
-        name: AppRoutes.homepage.name,
+        path: AppRoutes.homepage.details.path,
+        name: AppRoutes.homepage.details.name,
         builder: (context, state) {
           return HomePage();
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.reservation_page.details.path,
+        name: AppRoutes.reservation_page.details.name,
+        builder: (context, state) {
+          return const ReservationStepper();
         },
       ),
     ],

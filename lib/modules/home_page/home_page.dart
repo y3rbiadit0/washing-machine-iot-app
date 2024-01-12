@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:washing_machine_iot_app/modules/home_page/washing_machine_widget.dart';
 
 import '../../language/language_pop_up_menu.dart';
 import '../../providers/washing_machine_api/washing_machine_provider.dart';
+import '../../routes/routes.dart';
 import '../error_widgets/no_connection_error.dart';
 
 class HomePage extends ConsumerWidget {
@@ -35,7 +37,7 @@ class HomePage extends ConsumerWidget {
                     outOfService: outOfService),
                 const SizedBox(height: 8.0),
                 const DryerMachinesSection(
-                    available: 1, occupied: 2, outOfService: 3),
+                    available: 0, occupied: 0, outOfService: 0),
               ],
             );
           },
@@ -47,7 +49,9 @@ class HomePage extends ConsumerWidget {
           loading: () => const Center(child: CircularProgressIndicator())),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
+        onPressed: () {
+          context.go(AppRoutes.reservation_page.details.path);
+        },
         label: Text(
           AppLocalizations.of(context)?.home_page_reserve_button ?? "",
           style: const TextStyle(color: Colors.black),

@@ -22,7 +22,7 @@ class LoginPage extends ConsumerWidget {
                 onTap: () {
                   //TODO: Activate this when main functionalities are done!
                   //await Authentication().signInWithGoogle(context);
-                  context.go(AppRoutes.homepage.path);
+                  context.go(AppRoutes.homepage.details.path);
                 },
                 child: Material(
                   color: Colors.transparent,
