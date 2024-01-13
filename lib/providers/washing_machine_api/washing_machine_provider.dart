@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../api_client.dart';
+import 'reservation_model.dart';
 import 'washing_machine_model.dart';
 
 final apiProvider = Provider<WashingMachinesAPI>((ref) {
@@ -25,5 +28,10 @@ class WashingMachinesAPI extends WashingMachineHttpClient {
   Future<Map<String, dynamic>> getHealthStatus() async {
     final response = await dioClient.get("health");
     return response.data as Map<String, dynamic>;
+  }
+
+  Future<ReservationModel> reserveMachine() async {
+    final response = await dioClient.post("washing-machines/reserve");
+    return ReservationModel.fromJson(response.data);
   }
 }
