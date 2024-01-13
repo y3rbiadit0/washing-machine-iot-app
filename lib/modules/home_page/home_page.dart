@@ -14,50 +14,55 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final washingMachinesData = ref.watch(allWashingMachinesProvider);
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(AppLocalizations.of(context)?.home_page_title ?? ""),
-        actions: const [LanguagePopUpMenu(), SizedBox(width: 8.0)],
-      ),
-      body: washingMachinesData.when(
-          data: (data) {
-            int available = data.where((e) => e.status == "free").length;
-            int occupied = data.where((e) => e.status == "occupied").length;
-            int outOfService =
-                data.where((e) => e.status == "out_of_service").length;
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const SizedBox(height: 8.0),
-                WashingMachinesSection(
-                    available: available,
-                    occupied: occupied,
-                    outOfService: outOfService),
-                const SizedBox(height: 8.0),
-                const DryerMachinesSection(
-                    available: 0, occupied: 0, outOfService: 0),
-              ],
-            );
-          },
-          error: (error, stack) => Center(child: NoConnection(
-                onRetry: () {
-                  ref.refresh(allWashingMachinesProvider.future);
-                },
-              )),
-          loading: () => const Center(child: CircularProgressIndicator())),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          context.go(AppRoutes.reservation_page.details.path);
-        },
-        label: Text(
-          AppLocalizations.of(context)?.home_page_reserve_button ?? "",
-          style: const TextStyle(color: Colors.black),
+    final washingMachinesData = ref.watch(washingMachinesStreamProvider);
+    int available = 0;
+    int occupied = 0;
+    int outOfService = 0;
+    if (washingMachinesData.value != null) {
+      available =
+          washingMachinesData.value!.where((e) => e.status == "free").length;
+      occupied = washingMachinesData.value!
+          .where((e) => e.status == "occupied")
+          .length;
+      outOfService = washingMachinesData.value!
+          .where((e) => e.status == "out_of_service")
+          .length;
+    }
+    return switch (washingMachinesData) {
+      AsyncData(:final value) => Scaffold(
+          appBar: AppBar(
+            title: Text(AppLocalizations.of(context)?.home_page_title ?? ""),
+            actions: const [LanguagePopUpMenu(), SizedBox(width: 8.0)],
+          ),
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const SizedBox(height: 8.0),
+              WashingMachinesSection(
+                  available: available,
+                  occupied: occupied,
+                  outOfService: outOfService),
+              const SizedBox(height: 8.0),
+              const DryerMachinesSection(
+                  available: 0, occupied: 0, outOfService: 0),
+            ],
+          ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerFloat,
+          floatingActionButton: FloatingActionButton.extended(
+            onPressed: () {
+              context.go(AppRoutes.reservation_page.details.path);
+            },
+            label: Text(
+              AppLocalizations.of(context)?.home_page_reserve_button ?? "",
+              style: const TextStyle(color: Colors.black),
+            ),
+          ),
         ),
-      ),
-    );
+      AsyncLoading() => const CircularProgressIndicator(),
+      AsyncError(:final error) => Text(error.toString()),
+      _ => const CircularProgressIndicator(),
+    };
   }
 }
 
