@@ -39,20 +39,27 @@ class HomePage extends ConsumerWidget {
             children: [
               const SizedBox(height: 8.0),
               WashingMachinesSection(
-                  available: available,
-                  occupied: occupied,
-                  outOfService: outOfService),
+                available: available,
+                occupied: occupied,
+                outOfService: outOfService,
+              ),
               const SizedBox(height: 8.0),
               const DryerMachinesSection(
-                  available: 0, occupied: 0, outOfService: 0),
+                available: 0,
+                occupied: 0,
+                outOfService: 0,
+              ),
             ],
           ),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
           floatingActionButton: FloatingActionButton.extended(
             onPressed: () {
-              context.go(AppRoutes.reservation_page.details.path);
+              context.goNamed(
+                AppRoutes.reservation_page.details.name,
+              );
             },
+            icon: const Icon(Icons.add),
             label: Text(
               AppLocalizations.of(context)?.home_page_reserve_button ?? "",
               style: const TextStyle(color: Colors.black),
@@ -60,7 +67,7 @@ class HomePage extends ConsumerWidget {
           ),
         ),
       AsyncLoading() => const CircularProgressIndicator(),
-      AsyncError(:final error) => Text(error.toString()),
+      AsyncError(:final error) => NoConnection(onRetry: () {}),
       _ => const CircularProgressIndicator(),
     };
   }

@@ -6,15 +6,15 @@ import '../../providers/washing_machine_api/reservation_model.dart';
 import '../../providers/washing_machine_api/washing_machine_provider.dart';
 import '../../routes/routes.dart';
 
-final StateProvider<int> stepperProvider = StateProvider<int>((ref) => 0);
-
-final FutureProvider<ReservationModel> reservationProvider =
-    FutureProvider<ReservationModel>((ref) async {
-  return ref.watch(apiProvider).reserveMachine();
-});
-
 class ReservationStepper extends ConsumerWidget {
-  const ReservationStepper({super.key});
+  ReservationStepper({super.key});
+
+  final StateProvider<int> stepperProvider = StateProvider<int>((ref) => 0);
+
+  final FutureProvider<ReservationModel> reservationProvider =
+      FutureProvider<ReservationModel>((ref) async {
+    return ref.watch(apiProvider).reserveMachine();
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

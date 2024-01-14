@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../auth/auth_provider.dart';
 import '../modules/home_page/home_page.dart';
-import '../modules/home_page/reservation.dart';
+import '../modules/home_page/reservation_page.dart';
 import '../modules/login_page/login_page.dart';
 import '../routes/routes.dart';
 
@@ -37,7 +37,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: AppRoutes.reservation_page.details.path,
         name: AppRoutes.reservation_page.details.name,
         builder: (context, state) {
-          return const ReservationStepper();
+          return ReservationStepper();
         },
       ),
     ],
