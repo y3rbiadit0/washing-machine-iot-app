@@ -54,18 +54,22 @@ class HomePage extends ConsumerWidget {
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
           floatingActionButton: FloatingActionButton.extended(
-            onPressed: () {
-              context.goNamed(
-                AppRoutes.reservation_page.details.name,
-              );
-            },
+            onPressed: available > 0
+                ? () {
+                    context.goNamed(
+                      AppRoutes.reservation_page.details.name,
+                    );
+                  }
+                : null,
             icon: const Icon(Icons.add),
             label: Text(
               AppLocalizations.of(context)?.home_page_reserve_button ?? "",
-              style: const TextStyle(color: Colors.black),
+              style: available > 0
+                  ? const TextStyle(color: Colors.black)
+                  : const TextStyle(
+                      color: Colors.grey), // Set disabled text color
             ),
-          ),
-        ),
+          )),
       AsyncLoading() => const CircularProgressIndicator(),
       AsyncError(:final error) => NoConnection(onRetry: () {}),
       _ => const CircularProgressIndicator(),
