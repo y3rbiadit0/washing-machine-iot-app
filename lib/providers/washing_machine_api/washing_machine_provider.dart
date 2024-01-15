@@ -1,14 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../api_client.dart';
 import 'reservation_model.dart';
 import 'washing_machine_model.dart';
+
 part 'washing_machine_provider.g.dart';
 
 final apiProvider = Provider<WashingMachinesAPI>((ref) {
