@@ -18,7 +18,7 @@ class WashingMachineStatusData {
 }
 
 class HomePage extends ConsumerWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -27,7 +27,7 @@ class HomePage extends ConsumerWidget {
 
     WashingMachineStatusData washingStatusData =
         parseStatus(washingMachinesStreamData);
-    bool hasReservations = (reservationStreamData.value?.length ?? 0) > 0;
+
     return switch (washingMachinesStreamData) {
       AsyncData(:final value) => Scaffold(
           appBar: AppBar(
@@ -53,17 +53,37 @@ class HomePage extends ConsumerWidget {
           ),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
-          floatingActionButton: hasReservations
-              ? FloatingScanQRActionButton(
-                  reservationData: reservationStreamData.value?.first)
-              : FloatingReserveActionButton(
-                  washingStatusData: washingStatusData,
-                ),
+          floatingActionButton: buildFloatingActionButton(
+            context,
+            washingMachinesStreamData,
+            reservationStreamData.value ?? [],
+          ),
         ),
-      AsyncLoading() => const CircularProgressIndicator(),
+      AsyncLoading() => LoadingPage(),
       AsyncError(:final error) => NoConnection(onRetry: () {}),
-      _ => const CircularProgressIndicator(),
+      _ => LoadingPage(),
     };
+  }
+
+  StatelessWidget buildFloatingActionButton(
+      BuildContext context,
+      AsyncValue<List<WashingMachineModel>> data,
+      List<ReservationModel> reservationsData) {
+    if (reservationsData.isNotEmpty) {
+      final String status = reservationsData.first.reservationStatus;
+      switch (status) {
+        case "created":
+          return FloatingLoadClothesActionButton(
+              reservationData: reservationsData.first);
+        case "clothes_loaded":
+          return FloatingGetYourClothesActionButton(
+              reservationData: reservationsData.first);
+      }
+    }
+
+    return FloatingReserveActionButton(
+      washingStatusData: parseStatus(data),
+    );
   }
 
   WashingMachineStatusData parseStatus(
@@ -112,8 +132,8 @@ class FloatingReserveActionButton extends StatelessWidget {
   }
 }
 
-class FloatingScanQRActionButton extends StatelessWidget {
-  const FloatingScanQRActionButton({
+class FloatingLoadClothesActionButton extends StatelessWidget {
+  const FloatingLoadClothesActionButton({
     super.key,
     required this.reservationData,
   });
@@ -124,12 +144,53 @@ class FloatingScanQRActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingActionButton.extended(
       onPressed: () => context.goNamed(
-        AppRoutes.scan_qr_page_start.details.name,
+        AppRoutes.load_your_clothes.details.name,
+        extra: reservationData,
       ),
       icon: const Icon(Icons.qr_code),
       label: const Text(
-        "Unblock machine",
+        "Load your clothes",
         style: TextStyle(color: Colors.black),
+      ),
+    );
+  }
+}
+
+class FloatingGetYourClothesActionButton extends StatelessWidget {
+  const FloatingGetYourClothesActionButton({
+    super.key,
+    required this.reservationData,
+  });
+
+  final ReservationModel? reservationData;
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton.extended(
+      onPressed: () => context.goNamed(
+        AppRoutes.get_your_clothes.details.name,
+        extra: reservationData,
+      ),
+      icon: const Icon(Icons.qr_code),
+      label: const Text(
+        "Get your clothes",
+        style: TextStyle(color: Colors.black),
+      ),
+    );
+  }
+}
+
+class LoadingPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(context.l10n?.home_page_title ?? ""),
+        actions: const [LanguagePopUpMenu(), SizedBox(width: 8.0)],
+      ),
+      body: const Center(
+        child:
+            CircularProgressIndicator(), // You can customize the loading indicator
       ),
     );
   }
