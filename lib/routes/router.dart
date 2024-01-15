@@ -2,12 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:washing_machine_iot_app/modules/home_page/scan_qr_page.dart';
 
 import '../auth/auth_provider.dart';
+import '../modules/home_page/get_your_clothes_widget.dart';
 import '../modules/home_page/home_page.dart';
+import '../modules/home_page/load_your_clothes_widget.dart';
 import '../modules/home_page/reservation_page.dart';
 import '../modules/login_page/login_page.dart';
+import '../providers/washing_machine_api/reservation_model.dart';
 import '../routes/routes.dart';
 
 final _key = GlobalKey<NavigatorState>();
@@ -42,10 +44,17 @@ final routerProvider = Provider<GoRouter>((ref) {
         },
       ),
       GoRoute(
-        path: AppRoutes.scan_qr_page_start.details.path,
-        name: AppRoutes.scan_qr_page_start.details.name,
+        path: AppRoutes.load_your_clothes.details.path,
+        name: AppRoutes.load_your_clothes.details.name,
         builder: (context, state) {
-          return ScanQRStepperStart();
+          return LoadYourClothesWidget(state.extra as ReservationModel);
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.get_your_clothes.details.path,
+        name: AppRoutes.get_your_clothes.details.name,
+        builder: (context, state) {
+          return GetYourClothesWidget(state.extra as ReservationModel);
         },
       )
     ],

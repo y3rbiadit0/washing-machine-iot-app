@@ -8,7 +8,13 @@ class RouteData {
   final String path;
 }
 
-enum AppRoutes { homepage, login_page, reservation_page, scan_qr_page_start }
+enum AppRoutes {
+  homepage,
+  login_page,
+  reservation_page,
+  load_your_clothes,
+  get_your_clothes
+}
 
 extension AppRoutesExtension on AppRoutes {
   RouteData get details {
@@ -19,8 +25,12 @@ extension AppRoutesExtension on AppRoutes {
         return const RouteData(name: "login_page", path: "/login");
       case AppRoutes.reservation_page:
         return const RouteData(name: "reservation_page", path: "/reservation");
-      case AppRoutes.scan_qr_page_start:
-        return const RouteData(name: "scan_qr_start", path: "/start");
+      case AppRoutes.load_your_clothes:
+        return const RouteData(
+            name: "load_your_clothes", path: "/load_your_clothes");
+      case AppRoutes.get_your_clothes:
+        return const RouteData(
+            name: "get_your_clothes", path: "/get_your_clothes");
     }
   }
 }
