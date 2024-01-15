@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'washing_machine_api/washing_machine_provider.dart';
+import 'washing_machine_api/washing_machine_api_client.dart';
 
 final internetConnectionProvider = StreamProvider.autoDispose<bool>((ref) {
   final apiService = WashingMachinesAPI();
