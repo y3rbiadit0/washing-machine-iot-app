@@ -3,8 +3,13 @@ import "package:dio/dio.dart";
 import '../logger.dart';
 
 class WashingMachineHttpClient {
+  // static const String androidLocalhost = "10.0.2.2";
+  // static const String defaultLocalhost = "0.0.0.0";
+
+  static const String serverAddress = "172.20.10.14:8000";
+
   final options = BaseOptions(
-    baseUrl: "http://10.0.2.2:8000/v1/",
+    baseUrl: "http://$serverAddress/v1/",
     connectTimeout: const Duration(seconds: 10),
     receiveTimeout: const Duration(seconds: 10),
   );

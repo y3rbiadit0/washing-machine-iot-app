@@ -7,7 +7,7 @@ part of 'washing_machine_provider.dart';
 // **************************************************************************
 
 String _$washingMachinesStreamHash() =>
-    r'b36f72a348ffef7cc920afbc3824f872ee500115';
+    r'7f1b39676751a9622ea3c7c6c20ca770641a7475';
 
 /// See also [washingMachinesStream].
 @ProviderFor(washingMachinesStream)
@@ -24,8 +24,9 @@ final washingMachinesStreamProvider =
 
 typedef WashingMachinesStreamRef
     = AutoDisposeStreamProviderRef<List<WashingMachineModel>>;
+
 String _$reservationsStreamHash() =>
-    r'fbdf1fbedd615636317bde1b959d1974e6b5ed38';
+    r'9d050f4d515d0226187ec76f6fb795ba132ed96d';
 
 /// See also [reservationsStream].
 @ProviderFor(reservationsStream)
@@ -42,5 +43,23 @@ final reservationsStreamProvider =
 
 typedef ReservationsStreamRef
     = AutoDisposeStreamProviderRef<List<ReservationModel>>;
+
+String _$washingMachineDoorProviderHash() =>
+    r'35801b761beab146fbffa4d3adccef6cf2d6816d';
+
+/// See also [WashingMachineDoorProvider].
+@ProviderFor(WashingMachineDoorProvider)
+final washingMachineDoorProvider =
+    AutoDisposeAsyncNotifierProvider<WashingMachineDoorProvider, void>.internal(
+  WashingMachineDoorProvider.new,
+  name: r'washingMachineDoorProviderProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$washingMachineDoorProviderHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$WashingMachineDoorProvider = AutoDisposeAsyncNotifier<void>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

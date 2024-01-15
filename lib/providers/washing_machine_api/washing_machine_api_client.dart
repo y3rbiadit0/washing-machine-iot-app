@@ -23,4 +23,18 @@ class WashingMachinesAPI extends WashingMachineHttpClient {
     final response = await dioClient.post("washing-machines/reserve");
     return ReservationModel.fromJson(response.data);
   }
+
+  Future<Map<String, dynamic>> blockDoor(
+      ReservationModel reservationModel) async {
+    final response = await dioClient.post("washing-machines/block",
+        data: reservationModel.toJson());
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> unblockDoor(
+      ReservationModel reservationModel) async {
+    final response = await dioClient.post("washing-machines/unblock",
+        data: reservationModel.toJson());
+    return response.data as Map<String, dynamic>;
+  }
 }

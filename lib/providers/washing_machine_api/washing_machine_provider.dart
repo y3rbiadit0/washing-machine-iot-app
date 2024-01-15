@@ -5,6 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:washing_machine_iot_app/providers/washing_machine_api/reservation_model.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
+import '../api_client.dart';
 import 'washing_machine_api_client.dart';
 import 'washing_machine_model.dart';
 
@@ -18,7 +19,8 @@ final apiProvider = Provider<WashingMachinesAPI>((ref) {
 Stream<List<WashingMachineModel>> washingMachinesStream(
     WashingMachinesStreamRef ref) async* {
   final socket = WebSocketChannel.connect(
-    Uri.parse('ws://10.0.2.2:8000/v1/washing-machines/washing-machines-ws'),
+    Uri.parse(
+        'ws://${WashingMachineHttpClient.serverAddress}/v1/washing-machines/washing-machines-ws'),
   );
   ref.onDispose(socket.sink.close);
   await for (final message in socket.stream) {
@@ -33,11 +35,26 @@ Stream<List<WashingMachineModel>> washingMachinesStream(
 Stream<List<ReservationModel>> reservationsStream(
     ReservationsStreamRef ref) async* {
   final socket = WebSocketChannel.connect(
-    Uri.parse('ws://10.0.2.2:8000/v1/washing-machines/reservation-ws'),
+    Uri.parse(
+        'ws://${WashingMachineHttpClient.serverAddress}/v1/washing-machines/reservation-ws'),
   );
   ref.onDispose(socket.sink.close);
   await for (final message in socket.stream) {
     List<dynamic> reservationsData = jsonDecode(message) as List<dynamic>;
     yield reservationsData.map((e) => ReservationModel.fromJson(e)).toList();
+  }
+}
+
+@riverpod
+class WashingMachineDoorProvider extends _$WashingMachineDoorProvider {
+  @override
+  Future<void> build() async {}
+
+  Future<void> blockDoor(ReservationModel reservationModel) async {
+    await WashingMachinesAPI().blockDoor(reservationModel);
+  }
+
+  Future<void> unblockDoor(ReservationModel reservationModel) async {
+    await WashingMachinesAPI().unblockDoor(reservationModel);
   }
 }
