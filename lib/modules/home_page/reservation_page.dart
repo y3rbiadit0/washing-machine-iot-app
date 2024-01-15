@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:washing_machine_iot_app/language/l10n_helper.dart';
 
 import '../../providers/washing_machine_api/reservation_model.dart';
 import '../../providers/washing_machine_api/washing_machine_provider.dart';
@@ -20,10 +21,9 @@ class ReservationStepper extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final currentStep = ref.watch(stepperProvider);
     final reservationData = ref.watch(reservationProvider);
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Reserve Machine'),
-      ),
+      appBar: AppBar(title: Text(context.l10n!.reservation_page_title)),
       body: Stepper(
         type: StepperType.vertical,
         currentStep: currentStep,
@@ -33,7 +33,9 @@ class ReservationStepper extends ConsumerWidget {
             children: <Widget>[
               TextButton(
                 onPressed: dtl.onStepContinue,
-                child: isFinalStep ? const Text('Finish') : const Text(''),
+                child: isFinalStep
+                    ? Text(context.l10n!.reservation_step_finish)
+                    : const Text(''),
               ),
               TextButton(
                 onPressed: dtl.onStepCancel,
@@ -45,11 +47,11 @@ class ReservationStepper extends ConsumerWidget {
         onStepContinue: () => context.go(AppRoutes.homepage.details.path),
         steps: [
           Step(
-            title: const Text('Reserving Machine'),
+            title: Text(context.l10n!.reservation_step_1_title),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text('Reserving your machine...'),
+                Text(context.l10n!.reservation_step_1_description),
                 const SizedBox(height: 16),
                 reservationData.when(
                   loading: () => const CircularProgressIndicator(),
@@ -70,20 +72,21 @@ class ReservationStepper extends ConsumerWidget {
             state: currentStep > 0 ? StepState.complete : StepState.indexed,
           ),
           Step(
-            title: const Text('Machine Information'),
+            title: Text(context.l10n!.reservation_step_2_title),
             content: Column(
               children: [
                 Text(
-                  "Washing Machine ID ${reservationData.value?.machineId}",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  "${context.l10n!.reservation_step_2_machine_id} ${reservationData.value?.machineId}",
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 16),
-                Text('Information about the machine:'),
-                SizedBox(height: 16),
-                Text('Reserved!',
-                    style: TextStyle(fontSize: 18, color: Colors.green)),
-                SizedBox(height: 16),
-                Text('15 min to load your clothes'),
+                const SizedBox(height: 16),
+                Text(context.l10n!.reservation_step_2_machine_data),
+                const SizedBox(height: 16),
+                Text(context.l10n!.reservatopn_step_2_action,
+                    style: const TextStyle(fontSize: 18, color: Colors.green)),
+                const SizedBox(height: 16),
+                Text(context.l10n!.reservation_step_2_description),
               ],
             ),
             isActive: currentStep == 1,

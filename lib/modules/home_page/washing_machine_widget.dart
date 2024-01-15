@@ -27,10 +27,10 @@ abstract class _MachineStatus extends StatelessWidget {
   }
 }
 
-class _WashingMachineStatus extends _MachineStatus {
+class WashingMachineStatus extends _MachineStatus {
   final double size = 50.0;
 
-  const _WashingMachineStatus(
+  const WashingMachineStatus(
       {required super.number, required super.color, required super.label});
 
   @override
@@ -56,34 +56,10 @@ class _WashingMachineStatus extends _MachineStatus {
   }
 }
 
-class AvailableWashingMachine extends _WashingMachineStatus {
-  const AvailableWashingMachine({required number})
-      : super(
-            number: number,
-            color: WashingMachineStatusColor.available,
-            label: "Available");
-}
-
-class OccupiedWashingMachine extends _WashingMachineStatus {
-  const OccupiedWashingMachine({required number})
-      : super(
-            number: number,
-            color: WashingMachineStatusColor.occupied,
-            label: "Occupied");
-}
-
-class OutOfServiceWashingMachine extends _WashingMachineStatus {
-  const OutOfServiceWashingMachine({required number})
-      : super(
-            number: number,
-            color: WashingMachineStatusColor.outOfService,
-            label: "Out of Service");
-}
-
-class _DryerMachineStatus extends _MachineStatus {
+class DryerMachineStatus extends _MachineStatus {
   final double size = 100.0;
 
-  const _DryerMachineStatus(
+  const DryerMachineStatus(
       {required super.number, required super.color, required super.label});
 
   @override
@@ -109,28 +85,4 @@ class _DryerMachineStatus extends _MachineStatus {
       ),
     );
   }
-}
-
-class AvailableDryerMachine extends _DryerMachineStatus {
-  const AvailableDryerMachine({required number})
-      : super(
-            number: number,
-            color: WashingMachineStatusColor.available,
-            label: "Available");
-}
-
-class OccupiedDryerMachine extends _DryerMachineStatus {
-  const OccupiedDryerMachine({required number})
-      : super(
-            number: number,
-            color: WashingMachineStatusColor.occupied,
-            label: "Occupied");
-}
-
-class OutOfServiceDryerMachine extends _DryerMachineStatus {
-  const OutOfServiceDryerMachine({required number})
-      : super(
-            number: number,
-            color: WashingMachineStatusColor.outOfService,
-            label: "Out of Service");
 }

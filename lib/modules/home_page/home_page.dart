@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:washing_machine_iot_app/language/l10n_helper.dart';
 import 'package:washing_machine_iot_app/modules/home_page/washing_machine_widget.dart';
 
 import '../../language/language_pop_up_menu.dart';
@@ -31,7 +32,7 @@ class HomePage extends ConsumerWidget {
     return switch (washingMachinesData) {
       AsyncData(:final value) => Scaffold(
           appBar: AppBar(
-            title: Text(AppLocalizations.of(context)?.home_page_title ?? ""),
+            title: Text(context.l10n?.home_page_title ?? ""),
             actions: const [LanguagePopUpMenu(), SizedBox(width: 8.0)],
           ),
           body: Column(
@@ -63,7 +64,7 @@ class HomePage extends ConsumerWidget {
                 : null,
             icon: const Icon(Icons.add),
             label: Text(
-              AppLocalizations.of(context)?.home_page_reserve_button ?? "",
+              context.l10n?.home_page_reserve_button ?? "",
               style: available > 0
                   ? const TextStyle(color: Colors.black)
                   : const TextStyle(
@@ -117,19 +118,28 @@ class WashingMachinesSection extends StatelessWidget {
                   flex: 1,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: AvailableWashingMachine(number: available),
+                    child: WashingMachineStatus(
+                        number: available,
+                        color: WashingMachineStatusColor.available,
+                        label: context.l10n?.available ?? ""),
                   )),
               Expanded(
                   flex: 1,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: OccupiedWashingMachine(number: occupied),
+                    child: WashingMachineStatus(
+                        number: occupied,
+                        color: WashingMachineStatusColor.occupied,
+                        label: context.l10n?.occupied ?? ""),
                   )),
               Expanded(
                   flex: 1,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: OutOfServiceWashingMachine(number: outOfService),
+                    child: WashingMachineStatus(
+                        number: outOfService,
+                        color: WashingMachineStatusColor.outOfService,
+                        label: context.l10n?.out_of_service ?? ""),
                   )),
             ],
           ),
@@ -164,33 +174,41 @@ class DryerMachinesSection extends StatelessWidget {
             child: Align(
               alignment: Alignment.center,
               child: Text(
-                AppLocalizations.of(context)?.home_page_dryer_machines_label ??
-                    "",
+                context.l10n?.home_page_dryer_machines_label ?? "",
                 style: const TextStyle(fontSize: 18.0),
               ),
             ),
           ),
           const SizedBox(height: 8.0),
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Expanded(
                   flex: 1,
                   child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: AvailableDryerMachine(number: 1),
+                    padding: const EdgeInsets.all(8.0),
+                    child: DryerMachineStatus(
+                        number: available,
+                        color: WashingMachineStatusColor.available,
+                        label: context.l10n?.available ?? ""),
                   )),
               Expanded(
                   flex: 1,
                   child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: OccupiedDryerMachine(number: 2),
+                    padding: const EdgeInsets.all(8.0),
+                    child: DryerMachineStatus(
+                        number: occupied,
+                        color: WashingMachineStatusColor.occupied,
+                        label: context.l10n?.occupied ?? ""),
                   )),
               Expanded(
                   flex: 1,
                   child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: OutOfServiceDryerMachine(number: 3),
+                    padding: const EdgeInsets.all(8.0),
+                    child: DryerMachineStatus(
+                        number: outOfService,
+                        color: WashingMachineStatusColor.outOfService,
+                        label: context.l10n?.out_of_service ?? ""),
                   )),
             ],
           ),
