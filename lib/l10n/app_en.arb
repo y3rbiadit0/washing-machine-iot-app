@@ -7,5 +7,18 @@
   "home_page_title": "Washing Machines IoT",
   "home_page_reserve_button": "Reserve Machine!",
   "home_page_washing_machines_label": "Washing Machines",
-  "home_page_dryer_machines_label": "Dryer Machines"
+  "home_page_dryer_machines_label": "Dryer Machines",
+  "reservation_page_title": "Reserve Machine",
+  "reservation_page_reserve_button": "Reserve",
+  "reservation_step_finish": "Finish",
+  "reservation_step_1_title": "Reserving Machine",
+  "reservation_step_1_description": "Reserving your machine...",
+  "reservation_step_2_title": "Machine Information",
+  "reservation_step_2_machine_id": "Washing Machine ID",
+  "reservation_step_2_machine_data": "Information about the machine:",
+  "reservatopn_step_2_action": "Reserved!",
+  "reservation_step_2_description": "Your machine has been reserved!, you have 15 min to load your clothes",
+  "available": "Available",
+  "occupied": "Occupied",
+  "out_of_service": "Out of Service"
 }

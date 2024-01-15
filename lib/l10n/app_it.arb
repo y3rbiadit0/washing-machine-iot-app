@@ -4,5 +4,18 @@
   "home_page_title": "Washing Machines IoT",
   "home_page_reserve_button": "Prenota la lavatrice!",
   "home_page_washing_machines_label": "Lavatrici",
-  "home_page_dryer_machines_label": "Asciugatrici"
+  "home_page_dryer_machines_label": "Asciugatrici",
+  "reservation_page_title": "Prenota Lavatrice",
+  "reservation_page_reserve_button": "Prenota",
+  "reservation_step_finish": "Concludi",
+  "reservation_step_1_title": "Prenotazione Lavatrice",
+  "reservation_step_1_description": "Stiamo prenotando la tua lavatrice...",
+  "reservation_step_2_title": "Informazioni sulla Prenotazione",
+  "reservation_step_2_machine_id": "ID Lavatrice",
+  "reservation_step_2_machine_data": "Informazioni sulla lavatrice:",
+  "reservatopn_step_2_action": "Prenotato!",
+  "reservation_step_2_description": "La tua lavatrice è stata prenotata! Hai 15 minuti per caricare i tuoi vestiti",
+  "available": "Disponibile",
+  "occupied": "Occupato",
+  "out_of_service": "Fuori Servizio"
 }

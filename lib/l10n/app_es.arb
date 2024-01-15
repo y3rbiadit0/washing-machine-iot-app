@@ -4,5 +4,18 @@
   "home_page_title": "Washing Machines IoT",
   "home_page_reserve_button": "Hacé tu reserva!",
   "home_page_washing_machines_label": "Lavarropas",
-  "home_page_dryer_machines_label": "Secadoras"
+  "home_page_dryer_machines_label": "Secadoras",
+  "reservation_page_title": "Reservar Lavarropas",
+  "reservation_page_reserve_button": "Reserva",
+  "reservation_step_finish": "Finalizar",
+  "reservation_step_1_title": "Reservando Lavarropas",
+  "reservation_step_1_description": "Estamos reservando tu lavarropas...",
+  "reservation_step_2_title": "Información de la reserva",
+  "reservation_step_2_machine_id": "Lavarropas ID",
+  "reservation_step_2_machine_data": "Información del lavarropas:",
+  "reservatopn_step_2_action": "Reservado!",
+  "reservation_step_2_description": "Tu lavarropas has sido reservado!, tienes 15 minutos para cargar tu ropa",
+  "available": "Disponible",
+  "occupied": "Ocupado",
+  "out_of_service": "Fuera de servicio"
 }
