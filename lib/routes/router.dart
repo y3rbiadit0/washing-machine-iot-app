@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:washing_machine_iot_app/modules/home_page/scan_qr_page.dart';
 
 import '../auth/auth_provider.dart';
 import '../modules/home_page/home_page.dart';
@@ -40,6 +41,13 @@ final routerProvider = Provider<GoRouter>((ref) {
           return ReservationStepper();
         },
       ),
+      GoRoute(
+        path: AppRoutes.scan_qr_page_start.details.path,
+        name: AppRoutes.scan_qr_page_start.details.name,
+        builder: (context, state) {
+          return ScanQRStepperStart();
+        },
+      )
     ],
     redirect: (BuildContext context, GoRouterState state) {
       // If our async state is loading, don't perform redirects, yet

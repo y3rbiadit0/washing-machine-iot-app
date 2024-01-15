@@ -18,7 +18,7 @@ final apiProvider = Provider<WashingMachinesAPI>((ref) {
 Stream<List<WashingMachineModel>> washingMachinesStream(
     WashingMachinesStreamRef ref) async* {
   final socket = WebSocketChannel.connect(
-    Uri.parse('ws://0.0.0.0:8000/v1/washing-machines/washing-machines-ws'),
+    Uri.parse('ws://10.0.2.2:8000/v1/washing-machines/washing-machines-ws'),
   );
   ref.onDispose(socket.sink.close);
   await for (final message in socket.stream) {
@@ -33,7 +33,7 @@ Stream<List<WashingMachineModel>> washingMachinesStream(
 Stream<List<ReservationModel>> reservationsStream(
     ReservationsStreamRef ref) async* {
   final socket = WebSocketChannel.connect(
-    Uri.parse('ws://0.0.0.0:8000/v1/washing-machines/reservation-ws'),
+    Uri.parse('ws://10.0.2.2:8000/v1/washing-machines/reservation-ws'),
   );
   ref.onDispose(socket.sink.close);
   await for (final message in socket.stream) {

@@ -1,10 +1,11 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 
 import '../../language/l10n_helper.dart';
-import '../../providers/washing_machine_api/reservation_model.dart';
-import '../../providers/washing_machine_api/washing_machine_provider.dart';
 import '../../routes/routes.dart';
 
 class ScanQRStepperStart extends ConsumerWidget {
@@ -12,20 +13,14 @@ class ScanQRStepperStart extends ConsumerWidget {
 
   final StateProvider<int> stepperProvider = StateProvider<int>((ref) => 0);
 
-  final FutureProvider<ReservationModel> reservationProvider =
-      FutureProvider<ReservationModel>((ref) async {
-    return ref.watch(apiProvider).reserveMachine();
-  });
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentStep = ref.watch(stepperProvider);
-    final reservationData = ref.watch(reservationProvider);
 
     return Scaffold(
-      appBar: AppBar(title: Text(context.l10n!.reservation_page_title)),
+      appBar: AppBar(title: Text("Unblocking Door")),
       body: Stepper(
-        type: StepperType.vertical,
+        type: StepperType.horizontal,
         currentStep: currentStep,
         controlsBuilder: (BuildContext ctx, ControlsDetails dtl) {
           final isFinalStep = ref.read(stepperProvider.notifier).state == 1;
@@ -33,9 +28,7 @@ class ScanQRStepperStart extends ConsumerWidget {
             children: <Widget>[
               TextButton(
                 onPressed: dtl.onStepContinue,
-                child: isFinalStep
-                    ? Text(context.l10n!.reservation_step_finish)
-                    : const Text(''),
+                child: isFinalStep ? Text("Finish") : const Text(''),
               ),
               TextButton(
                 onPressed: dtl.onStepCancel,
@@ -47,38 +40,45 @@ class ScanQRStepperStart extends ConsumerWidget {
         onStepContinue: () => context.go(AppRoutes.homepage.details.path),
         steps: [
           Step(
-            title: Text(context.l10n!.reservation_step_1_title),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(context.l10n!.reservation_step_1_description),
-                const SizedBox(height: 16),
-                reservationData.when(
-                  loading: () => const CircularProgressIndicator(),
-                  data: (data) {
-                    _moveToNextStep(
-                      ref: ref,
-                      context: context,
-                      currentStep: ref.read(stepperProvider.notifier).state,
-                    );
-                    return const Icon(Icons.check,
-                        color: Colors.green, size: 50);
-                  },
-                  error: (err, stack) => Text('Error: $err'),
-                ),
-              ],
+            title: const Text("Scan QR"),
+            content: SafeArea(
+              child: Column(
+                children: [
+                  Text("Scan Washing Machine - QR Code"),
+                  SizedBox(height: 16),
+                  Container(
+                    width: 350,
+                    height: 350,
+                    child: MobileScanner(
+                      fit: BoxFit.contain,
+                      controller: MobileScannerController(
+                        detectionSpeed: DetectionSpeed.normal,
+                        facing: CameraFacing.front,
+                        formats: [BarcodeFormat.qrCode],
+                        useNewCameraSelector: true,
+                      ),
+                      onDetect: (capture) {
+                        final List<Barcode> barcodes = capture.barcodes;
+                        final Uint8List? image = capture.image;
+                        for (final barcode in barcodes) {
+                          debugPrint('Barcode found! ${barcode.rawValue}');
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
             isActive: currentStep == 0,
             state: currentStep > 0 ? StepState.complete : StepState.indexed,
           ),
           Step(
-            title: Text(context.l10n!.reservation_step_2_title),
+            title: const Text("Load Clothes"),
             content: Column(
               children: [
-                Text(
-                  "${context.l10n!.reservation_step_2_machine_id} ${reservationData.value?.machineId}",
-                  style: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.bold),
+                const Text(
+                  "Reservation for 1 hour",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 16),
                 Text(context.l10n!.reservation_step_2_machine_data),
