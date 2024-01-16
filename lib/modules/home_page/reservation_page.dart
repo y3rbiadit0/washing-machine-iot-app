@@ -23,7 +23,14 @@ class ReservationStepper extends ConsumerWidget {
     final reservationData = ref.watch(reservationProvider);
 
     return Scaffold(
-      appBar: AppBar(title: Text(context.l10n!.reservation_page_title)),
+      appBar: AppBar(
+          leading: currentStep == 0
+              ? IconButton(
+                  icon: Icon(Icons.arrow_back, color: Colors.black),
+                  onPressed: () => context.go(AppRoutes.homepage.details.path),
+                )
+              : null,
+          title: Text(context.l10n!.reservation_page_title)),
       body: Stepper(
         type: StepperType.vertical,
         currentStep: currentStep,

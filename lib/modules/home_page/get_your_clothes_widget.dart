@@ -20,7 +20,14 @@ class GetYourClothesWidget extends ConsumerWidget {
     final currentStep = ref.watch(stepperProvider);
     final qrCode = ref.watch(qrCodeScanned);
     return Scaffold(
-      appBar: AppBar(title: const Text("Get your clothes!")),
+      appBar: AppBar(
+          leading: currentStep == 0
+              ? IconButton(
+                  icon: Icon(Icons.arrow_back, color: Colors.black),
+                  onPressed: () => context.go(AppRoutes.homepage.details.path),
+                )
+              : null,
+          title: const Text("Get your clothes!")),
       body: Stepper(
         type: StepperType.horizontal,
         currentStep: currentStep,
