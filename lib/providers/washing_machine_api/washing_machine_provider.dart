@@ -41,7 +41,9 @@ Stream<List<ReservationModel>> reservationsStream(
   ref.onDispose(socket.sink.close);
   await for (final message in socket.stream) {
     List<dynamic> reservationsData = jsonDecode(message) as List<dynamic>;
-    yield reservationsData.map((e) => ReservationModel.fromJson(e)).toList();
+    List<ReservationModel> data =
+        reservationsData.map((e) => ReservationModel.fromJson(e)).toList();
+    yield data.where((e) => e.reservationStatus != "finished").toList();
   }
 }
 

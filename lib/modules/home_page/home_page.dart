@@ -15,6 +15,12 @@ class WashingMachineStatusData {
   int available = 0;
   int occupied = 0;
   int outOfService = 0;
+
+  WashingMachineStatusData({
+    this.available = 0,
+    this.occupied = 0,
+    this.outOfService = 0,
+  });
 }
 
 class HomePage extends ConsumerWidget {
@@ -89,17 +95,16 @@ class HomePage extends ConsumerWidget {
   WashingMachineStatusData parseStatus(
       AsyncValue<List<WashingMachineModel>> washingMachinesData) {
     WashingMachineStatusData washingStatusData = WashingMachineStatusData();
-    if (washingMachinesData.value != null) {
-      washingStatusData.available =
-          washingMachinesData.value!.where((e) => e.status == "free").length;
-      washingStatusData.occupied = washingMachinesData.value!
-          .where((e) => e.status == "occupied")
-          .length;
-      washingStatusData.outOfService = washingMachinesData.value!
-          .where((e) => e.status == "out_of_service")
-          .length;
-    }
-    return washingStatusData;
+    return switch (washingMachinesData) {
+      AsyncData(:final value) => WashingMachineStatusData(
+          available: value.where((e) => e.status == "free").length,
+          occupied: value.where((e) => e.status == "occupied").length,
+          outOfService: value.where((e) => e.status == "out_of_service").length,
+        ),
+      AsyncLoading() => washingStatusData,
+      AsyncError(:final error) => washingStatusData,
+      _ => washingStatusData,
+    };
   }
 }
 
