@@ -68,7 +68,7 @@ class LoadYourClothesWidget extends ConsumerWidget {
                     child: MobileScanner(
                       fit: BoxFit.cover,
                       controller: MobileScannerController(
-                        detectionSpeed: DetectionSpeed.normal,
+                        detectionSpeed: DetectionSpeed.noDuplicates,
                         facing: CameraFacing.back,
                         formats: [BarcodeFormat.qrCode],
                         useNewCameraSelector: true,

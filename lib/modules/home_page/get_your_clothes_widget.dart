@@ -68,7 +68,7 @@ class GetYourClothesWidget extends ConsumerWidget {
                     child: MobileScanner(
                       fit: BoxFit.cover,
                       controller: MobileScannerController(
-                        detectionSpeed: DetectionSpeed.normal,
+                        detectionSpeed: DetectionSpeed.noDuplicates,
                         facing: CameraFacing.back,
                         formats: [BarcodeFormat.qrCode],
                         useNewCameraSelector: true,
@@ -93,42 +93,38 @@ class GetYourClothesWidget extends ConsumerWidget {
             state: currentStep > 0 ? StepState.complete : StepState.indexed,
           ),
           Step(
-            title: const Text("Load"),
+            title: const Text("Retrieve"),
             content: const Column(
               children: [
                 Text(
-                  "Door Unblocked! - Load your clothes",
+                  "Door Unblocked! - Get your clothes",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 16),
                 Text("Door has been unblocked!"),
                 SizedBox(height: 16),
-                Text("Load your clothes and close the door!",
+                Text("Get your clothes and close the door!",
                     style: TextStyle(fontSize: 18, color: Colors.green)),
                 SizedBox(height: 16),
-                Text(
-                    "Press 'Continue' when clothes are loaded and door is closed"),
+                Text("Press 'Continue' when door is closed"),
               ],
             ),
             isActive: currentStep == 1,
             state: currentStep > 1 ? StepState.complete : StepState.indexed,
           ),
           Step(
-            title: const Text("Start"),
+            title: const Text("Finish"),
             content: const Column(
               children: [
                 Text(
-                  "Door blocked! - Start your laundry",
+                  "Door blocked! - Thanks for your patience!",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 16),
                 Text("Door has been blocked!"),
                 SizedBox(height: 16),
-                Text("You can now start your laundry!",
+                Text("Job done! You can now press finish!",
                     style: TextStyle(fontSize: 18, color: Colors.green)),
-                SizedBox(height: 16),
-                Text(
-                    "When your program is finished, scan the QR Code again to unblock the door"),
               ],
             ),
             isActive: currentStep == 2,
