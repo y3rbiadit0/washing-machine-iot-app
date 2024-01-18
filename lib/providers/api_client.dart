@@ -6,7 +6,7 @@ class WashingMachineHttpClient {
   // static const String androidLocalhost = "10.0.2.2";
   // static const String defaultLocalhost = "0.0.0.0";
 
-  static const String serverAddress = "172.20.10.14:8000";
+  static const String serverAddress = "192.168.1.21:49152";
 
   final options = BaseOptions(
     baseUrl: "http://$serverAddress/v1/",
